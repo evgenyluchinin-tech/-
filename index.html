@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ТТЕННИС МАРКЕТ - Магазин настольного тенниса</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script type="module" src="index.tsx" defer></script>
+<script type="importmap">
+{
+  "imports": {
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.16.0"
+  }
+}
+</script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1 class="logo">ТТЕННИС МАРКЕТ</h1>
+            <nav>
+                <ul>
+                    <li class="nav-item-dropdown">
+                        <a href="#product-grid" id="catalog-nav-link">
+                            Каталог
+                            <svg class="dropdown-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M7 10l5 5 5-5H7z"></path></svg>
+                        </a>
+                        <ul class="dropdown-menu" id="catalog-dropdown" hidden>
+                            <!-- Dynamic categories here -->
+                        </ul>
+                    </li>
+                    <li><a href="#about-us">О нас</a></li>
+                    <li><a href="https://t.me/+79214614027" target="_blank" rel="noopener noreferrer">Telegram</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <div id="ai-assistant-btn" class="header-icon" aria-label="Открыть чат с AI-консультантом" tabindex="0">
+                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2.12 11.12L17 12l.88.88c.38.38.38 1.02 0 1.41l-1.41 1.41c-.38.38-1.02.38-1.41 0l-.88-.88-.88.88c-.38.38-1.02.38-1.41 0l-1.41-1.41c-.38-.38-.38-1.02 0-1.41L12 12l-.88-.88c-.38-.38-.38-1.02 0-1.41l1.41-1.41c.38-.38 1.02.38 1.41 0l.88.88.88-.88c.38-.38 1.02.38 1.41 0l1.41 1.41c.38.38.38 1.02 0 1.41z"/></svg>
+                </div>
+                <div class="cart-icon header-icon" aria-label="Корзина" tabindex="0">
+                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12L8.1 13h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
+                    <span id="cart-count" aria-live="polite">0</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h2>ПОБЕДЫ СОБИРАЮТСЯ ЗДЕСЬ.</h2>
+                <p>Инвентарь прямиком с завода Японии по революционным ценам</p>
+                <a href="#product-grid" class="cta-btn">К покупкам</a>
+            </div>
+        </section>
+
+        <section class="filters container">
+            <h2 id="filters-heading" class="visually-hidden">Категории</h2>
+            <div id="category-filters" role="tablist" aria-labelledby="filters-heading">
+                <!-- Filter buttons will be dynamically inserted here -->
+            </div>
+        </section>
+
+        <section id="product-grid" class="product-grid container" aria-labelledby="products-heading">
+             <h2 id="products-heading" class="visually-hidden">Наши товары</h2>
+             <!-- Products will be dynamically inserted here -->
+        </section>
+        
+        <section id="about-us" class="container">
+            <h2>О НАС</h2>
+            <p>Инвентарь прямиком с завода Японии по лучшим ценам.</p>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 ТТЕННИС МАРКЕТ. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <!-- Cart Sidebar -->
+    <div id="cart-sidebar" class="cart-sidebar" role="dialog" aria-modal="true" aria-labelledby="cart-heading" hidden>
+        <div class="cart-overlay"></div>
+        <div class="cart-content">
+            <header class="cart-header">
+                <h2 id="cart-heading">Корзина</h2>
+                <button id="close-cart-btn" aria-label="Закрыть корзину">&times;</button>
+            </header>
+            <div id="cart-items-container">
+                <!-- Cart items will be dynamically inserted here -->
+            </div>
+            <footer class="cart-footer">
+                <div class="cart-total">
+                    <span>Итого:</span>
+                    <span id="cart-total-price">0 ₽</span>
+                </div>
+                <button class="checkout-btn">Оформить заказ</button>
+            </footer>
+        </div>
+    </div>
+    
+    <!-- Image Lightbox Modal -->
+    <div id="lightbox-modal" class="lightbox-modal" role="dialog" aria-modal="true" aria-labelledby="lightbox-heading" hidden>
+        <div class="lightbox-overlay"></div>
+        <div class="lightbox-content">
+             <h2 id="lightbox-heading" class="visually-hidden">Просмотр изображений товара</h2>
+            <button id="lightbox-close" class="lightbox-close" aria-label="Закрыть">&times;</button>
+            <div class="lightbox-image-wrapper">
+                <img id="lightbox-image" src="" alt="Увеличенное изображение товара">
+            </div>
+            <button id="lightbox-prev" class="lightbox-nav prev" aria-label="Предыдущее изображение">&lt;</button>
+            <button id="lightbox-next" class="lightbox-nav next" aria-label="Следующее изображение">&gt;</button>
+            <div id="lightbox-counter" class="lightbox-counter"></div>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div id="checkout-modal" class="checkout-modal" role="dialog" aria-modal="true" aria-labelledby="checkout-heading" hidden>
+        <div class="checkout-overlay"></div>
+        <div class="checkout-content">
+             <header class="checkout-header">
+                <h2 id="checkout-heading">Оформление заказа</h2>
+                <button id="close-checkout-btn" aria-label="Закрыть">&times;</button>
+            </header>
+            <div class="checkout-body">
+                <form id="checkout-form" novalidate>
+                    <h3>Ваши данные</h3>
+                    <div class="form-group">
+                        <label for="customer-name">Имя</label>
+                        <input type="text" id="customer-name" required autocomplete="name">
+                    </div>
+                    <div class="form-group">
+                        <label for="customer-phone">Телефон</label>
+                        <input type="tel" id="customer-phone" required autocomplete="tel">
+                    </div>
+                    <div class="form-group">
+                        <label for="customer-email">Email</label>
+                        <input type="email" id="customer-email" required autocomplete="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="customer-address">Адрес доставки</label>
+                        <textarea id="customer-address" rows="3" required autocomplete="street-address"></textarea>
+                    </div>
+                </form>
+                <div class="order-summary">
+                    <h3>Ваш заказ</h3>
+                    <div id="checkout-order-summary-items">
+                        <!-- Order summary items will be inserted here -->
+                    </div>
+                    <div class="checkout-total">
+                        <span>Итого:</span>
+                        <span id="checkout-total-price">0 ₽</span>
+                    </div>
+                </div>
+            </div>
+            <footer class="checkout-footer">
+                <button type="submit" form="checkout-form" class="confirm-order-btn">Подтвердить заказ</button>
+            </footer>
+        </div>
+    </div>
+
+    <!-- AI Chat Modal -->
+    <div id="ai-modal" class="ai-modal" role="dialog" aria-modal="true" aria-labelledby="ai-heading" hidden>
+        <div class="ai-modal-overlay"></div>
+        <div class="ai-modal-content">
+             <div class="chat-header">
+                <h3 id="ai-heading">AI Консультант</h3>
+                <button id="ai-modal-close-btn" aria-label="Закрыть чат">&times;</button>
+            </div>
+            <div id="ai-chat-messages" class="chat-messages">
+                <!-- Messages will be inserted here -->
+            </div>
+            <form id="ai-chat-form" class="chat-form">
+                <input type="text" id="ai-chat-input" placeholder="Спросите что-нибудь..." autocomplete="off" required>
+                <button type="submit" aria-label="Отправить">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path></svg>
+                </button>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>
